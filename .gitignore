@@ -1,0 +1,6 @@
+__pycache__
+.env
+docker/postgres/_data
+venv
+.vscode
+.pytest_cache
