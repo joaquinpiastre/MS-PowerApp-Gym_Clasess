@@ -7,10 +7,10 @@ class BaseRepository(Create, Read, Update, Delete):
         self.model = model
     
     def find_all(self):
-        return super().find_all()
+        return db.session.query(self.model).all()
         
     def find_by_id(self, id):
-        return super().find_by_id(id)
+        return db.session.query(self.model).filter(self.model.id == id).one_or_none()
 
     def create(self, entity: db.Model):
         db.session.add(entity)

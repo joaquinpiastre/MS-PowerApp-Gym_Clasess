@@ -1,1 +1,1 @@
-from app.mapping import GymClassSchema
+from .gym_class_schema import GymClassSchema

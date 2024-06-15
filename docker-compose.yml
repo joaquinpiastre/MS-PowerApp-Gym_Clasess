@@ -1,0 +1,20 @@
+version: "3.3"
+services:
+  ms-class:
+    container_name: ms-class
+    image: ms-class:v1.0.0
+    networks: 
+      - redinterna
+    ports: 
+      - 5002:5000
+    env_file:
+      - .env
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.ms-class.rule=Host(`ms-class.um.localhost`)"
+      - "traefik.http.routers.ms-class.entrypoints=web"
+      - "traefik.http.services.ms-class.loadbalancer.server.port=5000"
+
+networks:
+  redinterna:
+    external: true

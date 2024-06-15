@@ -1,1 +1,1 @@
-from app.resources.gym_class_resource import GymClassResource
+from .gym_class_resource import gym_class

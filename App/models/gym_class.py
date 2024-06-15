@@ -15,3 +15,10 @@ class GymClass(db.Model):
         self.name = name
         self.duration = duration
         self.instructor = instructor
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "duration": self.duration,
+            "instructor": self.instructor
+        }
