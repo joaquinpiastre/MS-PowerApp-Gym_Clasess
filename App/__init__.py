@@ -1,7 +1,6 @@
 from flask import Flask
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
-from app.config.Database import FULL_URL_DB
 from flask_caching import Cache
 from flask_marshmallow import Marshmallow
 from flask_jwt_extended import JWTManager
@@ -16,22 +15,16 @@ ma = Marshmallow()
 db = SQLAlchemy()
 migrate = Migrate()
 
-
 def create_app():
     config_name = os.getenv('FLASK_ENV')
-    app=Flask(__name__)
+    app = Flask(__name__)
 
-    app.config['SQLALCHEMY_DATABASE_URI'] = FULL_URL_DB
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-    app.debug = True
-    
-    f = config.factory(config_name if config_name else 'development')
-    app.config.from_object(f)
-    
     app.config['JWT_SECRET_KEY'] = 'super-secret'
     jwt = JWTManager(app)
     
+    f = config.factory(config_name if config_name else 'development')
+    app.config.from_object(f)
+
     ma.init_app(app)
     f.init_app(app)
     db.init_app(app)
@@ -45,9 +38,9 @@ def create_app():
                             'CACHE_REDIS_HOST': os.getenv('REDIS_HOST'), 'CACHE_REDIS_PORT': os.getenv('REDIS_PORT'),
                             'CACHE_REDIS_DB': os.getenv('REDIS_DBNAME'), 'CACHE_REDIS_PASSWORD': os.getenv('REDIS_PASSWORD'),
                             'CACHE_KEY_PREFIX':'product_'})
-    
+
     @app.shell_context_processor
     def ctx():
         return {"app": app, "db": db}
-    
+
     return app
